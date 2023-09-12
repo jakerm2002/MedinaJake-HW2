@@ -10,7 +10,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     // Outlets
     
@@ -20,7 +20,15 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // Set delegates for UITextFieldDelegate
+        userIdField.delegate = self
+        passwordField.delegate = self
+    }
+    
+    // Hide keyboard when 'return' key is pressed
+    func textFieldShouldReturn(_ textField:UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     // Hide keyboard when user touches elsewhere on screen
@@ -32,7 +40,7 @@ class ViewController: UIViewController {
 
     // Checks for valid values in both input fields to display message
     @IBAction func buttonPressed(_ sender: Any) {
-        if (userIdField.text == "" || passwordField.text == "") {
+        if (userIdField.text!.isEmpty || passwordField.text!.isEmpty) {
             statusLabel.text = "Invalid login"
         } else {
             let userID = userIdField.text!
